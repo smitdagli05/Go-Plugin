@@ -11,7 +11,7 @@ import { Messages } from '@salesforce/core';
 
 // const util = require('node:util');
 // const exec = util.promisify(require('node:child_process').exec);
-import { exec, ShellString } from 'shelljs';
+import { exec } from 'shelljs';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -38,7 +38,7 @@ export default class Org extends SfdxCommand {
       char: 'f',
       description: messages.getMessage('flags.force'),
     }),
-    customWord: flags.string({
+    'custom-word': flags.string({
       char: 'c',
       description: messages.getMessage('flags.customWord'),
     }),
@@ -53,18 +53,22 @@ export default class Org extends SfdxCommand {
   // Set this to true if your command requires a project workspace; 'requiresProject' is false by default
   protected static requiresProject = false;
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async run(): Promise<string> {
-    const executablePath: string = '/Users/smit.dagli/GoNodeIntegrationPluginTemplate/plugin-template/dadjoke';
+    const executablePath = '/Users/cdominguez/code/gh/sf/Go-Plugin/dadjoke';
 
-    const customWord: string = this.flags.customWord as string;
+    const customWord: string = this.flags['custom-word'] as string;
 
     if (customWord.length > 0) {
-      const shellOutput = exec(executablePath + '--term' + customWord);
-      this.ux.log(shellOutput.stdout)
+      const shellOutput = exec(executablePath + ' random ' + '--term ' + customWord, {
+        silent: true,
+      });
+
+      this.ux.log(shellOutput.stdout);
     } else {
-      //const { stdout, stderr } = await exec(executablePath);
-      //console.log('stdout:', stdout);
-      //console.error('stderr:', stderr);
+      // const { stdout, stderr } = await exec(executablePath);
+      // console.log('stdout:', stdout);
+      // console.error('stderr:', stderr);
     }
     return '';
   }

@@ -6,6 +6,7 @@
  */
 
 import * as os from 'os';
+import * as path from 'path';
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 
@@ -55,7 +56,7 @@ export default class Org extends SfdxCommand {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async run(): Promise<string> {
-    const executablePath = '/Users/cdominguez/code/gh/sf/Go-Plugin/dadjoke';
+    const executablePath = path.join(process.cwd(), path.sep, 'dadjoke');
 
     const customWord: string = this.flags['custom-word'] as string;
 

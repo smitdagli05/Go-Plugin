@@ -2,15 +2,6 @@
   {
     "command": "hello:org",
     "plugin": "@salesforce/plugin-template",
-    "flags": [
-      "apiversion",
-      "custom-word",
-      "force",
-      "json",
-      "loglevel",
-      "name",
-      "targetdevhubusername",
-      "targetusername"
-    ]
+    "flags": ["apiversion", "customword", "force", "json", "loglevel", "name", "targetdevhubusername", "targetusername"]
   }
 ]

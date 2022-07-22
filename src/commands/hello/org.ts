@@ -39,9 +39,9 @@ export default class Org extends SfdxCommand {
       char: 'f',
       description: messages.getMessage('flags.force'),
     }),
-    'custom-word': flags.string({
+    customword: flags.string({
       char: 'c',
-      description: messages.getMessage('flags.customWord'),
+      description: messages.getMessage('flags.customword'),
     }),
   };
 
@@ -56,20 +56,23 @@ export default class Org extends SfdxCommand {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async run(): Promise<string> {
-    const executablePath = path.join(process.cwd(), path.sep, 'dadjoke');
-
-    const customWord: string = this.flags['custom-word'] as string;
-
-    if (customWord.length > 0) {
-      const shellOutput = exec(executablePath + ' random ' + '--term ' + customWord, {
+    if (!this.flags.customword) {
+      const executablePath = path.join(process.cwd(), path.sep, 'dadjoke' + ' random ');
+      const s = exec(executablePath, {
         silent: true,
       });
-
-      this.ux.log(shellOutput.stdout);
+      this.ux.log(s.stdout);
     } else {
-      // const { stdout, stderr } = await exec(executablePath);
-      // console.log('stdout:', stdout);
-      // console.error('stderr:', stderr);
+      const customWord: string = this.flags['customword'] as string;
+
+      if (customWord.length > 0) {
+        const executablePath = path.join(process.cwd(), path.sep, 'dadjoke');
+        const shellOutput = exec(executablePath + ' random ' + '--term ' + customWord, {
+          silent: true,
+        });
+
+        this.ux.log(shellOutput.stdout);
+      }
     }
     return '';
   }
